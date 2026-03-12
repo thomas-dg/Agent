@@ -35,12 +35,12 @@
 
 系统采用 **多 Agent 协作** 的架构设计，融合了当前 AI Agent 领域的主流技术方案：
 
-| 能力 | 方案 | 说明 |
-|:---:|:---:|:---|
-| 🧠 智能问答 | **RAG + ReAct Agent** | 检索增强生成 + 工具增强推理 |
-| 🔧 运维分析 | **Plan-Execute Agent** | LLM 驱动的自动化分析流水线 |
-| 📚 知识管理 | **ETL Pipeline** | 文档 → 分割 → 向量化 → 存储 |
-| 💬 会话管理 | **Summary Buffer Memory** | 滑动窗口 + LLM 摘要压缩 |
+|    能力    | 方案 | 说明 |
+|:--------:|:---:|:---|
+| 🧠 智能问答  | **RAG + ReAct Agent** | 检索增强生成 + 工具增强推理 |
+| 🔧 AIOps | **Plan-Execute Agent** | LLM 驱动的自动化分析流水线 |
+| 📚 知识管理  | **ETL Pipeline** | 文档 → 分割 → 向量化 → 存储 |
+| 💬 会话管理  | **Summary Buffer Memory** | 滑动窗口 + LLM 摘要压缩 |
 
 ---
 

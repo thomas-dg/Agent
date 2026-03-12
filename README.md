@@ -28,18 +28,18 @@ Code Buddy Agent
 
 ## 📦 子项目一览
 
-### 🤖 [Super Agent](./super-agent/) — 智能 OnCall 运维助手
+### 🤖 [Super Agent](./super-agent/) — 智能 OnCall 助手
 
 > **🌐 在线体验：[http://49.232.223.185:3001](http://49.232.223.185:3001)**
 
 一个面向运维场景的智能 AI 助手，采用多 Agent 协作架构，集成了当前 AI Agent 领域的核心技术：
 
-| 能力 | 技术方案 | 说明 |
-|:---:|:---:|:---|
-| 🧠 智能问答 | RAG + ReAct Agent | 知识检索增强 + 工具增强推理 |
-| 🔧 运维分析 | Plan-Execute Agent | LLM 驱动的自动化分析流水线 |
-| 📚 知识管理 | ETL Pipeline | 文档加载 → 分割 → 向量化 → 存储 |
-| 🔌 工具集成 | MCP Protocol | Prometheus / CLS 日志 / 文档检索 |
+|    能力    | 技术方案 | 说明 |
+|:--------:|:---:|:---|
+| 🧠 智能问答  | RAG + ReAct Agent | 知识检索增强 + 工具增强推理 |
+| 🔧 AIOps | Plan-Execute Agent | LLM 驱动的自动化分析流水线 |
+| 📚 知识管理  | ETL Pipeline | 文档加载 → 分割 → 向量化 → 存储 |
+| 🔌 工具集成  | MCP Protocol | Prometheus / CLS 日志 / 文档检索 |
 
 **技术亮点**：
 - 基于 [Eino](https://github.com/cloudwego/eino)（字节跳动开源）的 **Graph 编排** 实现多 Agent 协作
