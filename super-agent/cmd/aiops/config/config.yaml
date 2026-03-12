@@ -1,0 +1,27 @@
+# https://goframe.org/docs/web/server-config-file-template
+server:
+  address: ":8000"
+  openapiPath: "/api.json"
+  swaggerPath: "/swagger"
+
+# https://goframe.org/docs/core/glog-config
+logger:
+  level: "all"
+  stdout: true
+
+ds_think_chat_model:
+  api_key: "46ea1603-XXXXXXXXXXXXXX"
+  base_url: "https://ark.cn-beijing.volces.com/api/v3"
+  model: "deepseek-v3-2-251201"
+
+ds_quick_chat_model:
+  api_key: "46ea1603-XXXXXXXXXXXXX"
+  base_url: "https://ark.cn-beijing.volces.com/api/v3"
+  model: "deepseek-v3-2-251201"
+
+embedding_model:
+  api_key: "sk-bXXXXXXXXXXXXXXXXX"
+  base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+  model: "text-embedding-v4"
+
+cls_mcp_url: "https://mcp-api.tencent-cloud.com/sse/7cdXXXXXXXXX"

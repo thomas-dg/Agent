@@ -1,0 +1,527 @@
+{
+  "name": "knowledge",
+  "input_type": {},
+  "output_type": {},
+  "gen_local_state": {},
+  "id": "pCRBt6",
+  "component": "Graph",
+  "nodes": [
+    {
+      "id": "start",
+      "key": "start",
+      "name": "Start",
+      "type": "start",
+      "layoutData": {
+        "position": {
+          "x": -200,
+          "y": 0
+        }
+      }
+    },
+    {
+      "id": "end",
+      "key": "end",
+      "name": "End",
+      "type": "end",
+      "layoutData": {
+        "position": {
+          "x": 988.97,
+          "y": -3.33
+        }
+      }
+    },
+    {
+      "id": "t15-D2",
+      "key": "FileLoader",
+      "name": "",
+      "type": "Loader",
+      "component_schema": {
+        "name": "file",
+        "component": "Loader",
+        "component_source": "official",
+        "identifier": "github.com/cloudwego/eino-ext/components/document/loader/file",
+        "input_type": {
+          "title": "document.Source",
+          "description": ""
+        },
+        "output_type": {
+          "title": "[]*schema.Document",
+          "description": ""
+        },
+        "config": {
+          "description": "github.com/cloudwego/eino-ext/blob/main/components/document/loader/file/file_loader.go",
+          "schema": {
+            "type": "object",
+            "description": "",
+            "properties": {
+              "UseNameAsID": {
+                "type": "boolean",
+                "description": "",
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "bool",
+                  "kind": "bool",
+                  "isPtr": false
+                }
+              }
+            },
+            "propertyOrder": [
+              "UseNameAsID"
+            ],
+            "goDefinition": {
+              "libraryRef": {
+                "version": "",
+                "module": "",
+                "pkgPath": ""
+              },
+              "typeName": "file.FileLoaderConfig",
+              "kind": "struct",
+              "isPtr": false
+            }
+          },
+          "config_input": "{}"
+        },
+        "is_io_type_mutable": false,
+        "version": "1.0.0"
+      },
+      "node_option": {
+        "input_key": "document.Source",
+        "output_key": "[]*schema.Document"
+      },
+      "layoutData": {
+        "position": {
+          "x": 61.16,
+          "y": -51.66
+        }
+      }
+    },
+    {
+      "id": "xYmbpg",
+      "key": "MarkdownSplitter",
+      "name": "",
+      "type": "DocumentTransformer",
+      "component_schema": {
+        "name": "markdown",
+        "component": "DocumentTransformer",
+        "component_source": "official",
+        "identifier": "github.com/cloudwego/eino-ext/components/document/transformer/splitter/markdown",
+        "input_type": {
+          "title": "[]*schema.Document",
+          "description": ""
+        },
+        "output_type": {
+          "title": "[]*schema.Document",
+          "description": ""
+        },
+        "config": {
+          "description": "github.com/cloudwego/eino-ext/blob/main/components/document/transformer/splitter/markdown/header.go",
+          "schema": {
+            "type": "object",
+            "description": "",
+            "properties": {
+              "Headers": {
+                "type": "object",
+                "description": "",
+                "additionalProperties": {
+                  "type": "string",
+                  "description": "",
+                  "goDefinition": {
+                    "libraryRef": {
+                      "version": "",
+                      "module": "",
+                      "pkgPath": ""
+                    },
+                    "typeName": "string",
+                    "kind": "string",
+                    "isPtr": false
+                  }
+                },
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "map[string]string",
+                  "kind": "map",
+                  "isPtr": false
+                }
+              },
+              "TrimHeaders": {
+                "type": "boolean",
+                "description": "",
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "bool",
+                  "kind": "bool",
+                  "isPtr": false
+                }
+              }
+            },
+            "propertyOrder": [
+              "Headers",
+              "TrimHeaders"
+            ],
+            "goDefinition": {
+              "libraryRef": {
+                "version": "",
+                "module": "",
+                "pkgPath": ""
+              },
+              "typeName": "markdown.HeaderConfig",
+              "kind": "struct",
+              "isPtr": false
+            }
+          },
+          "config_input": "{}"
+        },
+        "is_io_type_mutable": false,
+        "version": "1.0.0"
+      },
+      "node_option": {
+        "input_key": "[]*schema.Document",
+        "output_key": "[]*schema.Document"
+      },
+      "layoutData": {
+        "position": {
+          "x": 373.08,
+          "y": -64.23
+        }
+      }
+    },
+    {
+      "id": "ysHozR",
+      "key": "MilvusIndexer",
+      "name": "",
+      "type": "Indexer",
+      "component_schema": {
+        "name": "redis",
+        "component": "Indexer",
+        "component_source": "official",
+        "identifier": "github.com/cloudwego/eino-ext/components/indexer/redis",
+        "input_type": {
+          "title": "[]*schema.Document",
+          "description": ""
+        },
+        "output_type": {
+          "title": "[]string",
+          "description": ""
+        },
+        "slots": [
+          {
+            "component": "Embedding",
+            "field_loc_path": "Embedding",
+            "multiple": false,
+            "required": false,
+            "component_items": [
+              {
+                "name": "openai",
+                "component": "Embedding",
+                "component_source": "official",
+                "identifier": "github.com/cloudwego/eino-ext/components/embedding/openai",
+                "input_type": {
+                  "title": "[]string",
+                  "description": ""
+                },
+                "output_type": {
+                  "title": "[][]float64",
+                  "description": ""
+                },
+                "config": {
+                  "description": "github.com/cloudwego/eino-ext/blob/main/components/embedding/openai/embedding.go",
+                  "schema": {
+                    "type": "object",
+                    "description": "",
+                    "properties": {
+                      "APIKey": {
+                        "type": "string",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "",
+                            "pkgPath": ""
+                          },
+                          "typeName": "string",
+                          "kind": "string",
+                          "isPtr": false
+                        }
+                      },
+                      "APIVersion": {
+                        "type": "string",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "",
+                            "pkgPath": ""
+                          },
+                          "typeName": "string",
+                          "kind": "string",
+                          "isPtr": false
+                        }
+                      },
+                      "BaseURL": {
+                        "type": "string",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "",
+                            "pkgPath": ""
+                          },
+                          "typeName": "string",
+                          "kind": "string",
+                          "isPtr": false
+                        }
+                      },
+                      "ByAzure": {
+                        "type": "boolean",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "",
+                            "pkgPath": ""
+                          },
+                          "typeName": "bool",
+                          "kind": "bool",
+                          "isPtr": false
+                        }
+                      },
+                      "Dimensions": {
+                        "type": "number",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "",
+                            "pkgPath": ""
+                          },
+                          "typeName": "int",
+                          "kind": "int",
+                          "isPtr": true
+                        }
+                      },
+                      "EncodingFormat": {
+                        "type": "string",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "v0.0.0-20250106073650-ed838398894a",
+                            "module": "github.com/cloudwego/eino-ext/libs/acl/openai",
+                            "pkgPath": "github.com/cloudwego/eino-ext/libs/acl/openai"
+                          },
+                          "typeName": "openai.EmbeddingEncodingFormat",
+                          "kind": "string",
+                          "isPtr": true
+                        }
+                      },
+                      "Model": {
+                        "type": "string",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "",
+                            "pkgPath": ""
+                          },
+                          "typeName": "string",
+                          "kind": "string",
+                          "isPtr": false
+                        }
+                      },
+                      "Timeout": {
+                        "type": "number",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "time",
+                            "pkgPath": "time"
+                          },
+                          "typeName": "time.Duration",
+                          "kind": "int64",
+                          "isPtr": false
+                        }
+                      },
+                      "User": {
+                        "type": "string",
+                        "description": "",
+                        "goDefinition": {
+                          "libraryRef": {
+                            "version": "",
+                            "module": "",
+                            "pkgPath": ""
+                          },
+                          "typeName": "string",
+                          "kind": "string",
+                          "isPtr": true
+                        }
+                      }
+                    },
+                    "propertyOrder": [
+                      "ByAzure",
+                      "BaseURL",
+                      "APIVersion",
+                      "APIKey",
+                      "Timeout",
+                      "Model",
+                      "EncodingFormat",
+                      "Dimensions",
+                      "User"
+                    ],
+                    "goDefinition": {
+                      "libraryRef": {
+                        "version": "",
+                        "module": "",
+                        "pkgPath": ""
+                      },
+                      "typeName": "openai.EmbeddingConfig",
+                      "kind": "struct",
+                      "isPtr": false
+                    }
+                  },
+                  "config_input": ""
+                },
+                "is_io_type_mutable": false,
+                "version": "1.0.0",
+                "id": "GdD8BF",
+                "layoutData": {
+                  "isSlotNode": true,
+                  "position": {
+                    "x": 1019,
+                    "y": 126.22
+                  }
+                }
+              }
+            ],
+            "go_definition": {
+              "libraryRef": {
+                "version": "v0.3.6",
+                "module": "github.com/cloudwego/eino",
+                "pkgPath": "github.com/cloudwego/eino/components/embedding"
+              },
+              "typeName": "embedding.Embedder",
+              "kind": "interface",
+              "isPtr": false
+            }
+          }
+        ],
+        "config": {
+          "description": "github.com/cloudwego/eino-ext/blob/main/components/indexer/redis/indexer.go",
+          "schema": {
+            "type": "object",
+            "description": "",
+            "properties": {
+              "BatchSize": {
+                "type": "number",
+                "description": "",
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "int",
+                  "kind": "int",
+                  "isPtr": false
+                }
+              },
+              "KeyPrefix": {
+                "type": "string",
+                "description": "",
+                "goDefinition": {
+                  "libraryRef": {
+                    "version": "",
+                    "module": "",
+                    "pkgPath": ""
+                  },
+                  "typeName": "string",
+                  "kind": "string",
+                  "isPtr": false
+                }
+              }
+            },
+            "propertyOrder": [
+              "KeyPrefix",
+              "BatchSize"
+            ],
+            "goDefinition": {
+              "libraryRef": {
+                "version": "",
+                "module": "",
+                "pkgPath": ""
+              },
+              "typeName": "redis.IndexerConfig",
+              "kind": "struct",
+              "isPtr": false
+            }
+          },
+          "config_input": "{}"
+        },
+        "is_io_type_mutable": false,
+        "version": "1.0.0"
+      },
+      "node_option": {
+        "input_key": "[]*schema.Document",
+        "output_key": "[]string"
+      },
+      "layoutData": {
+        "position": {
+          "x": 684.44,
+          "y": -79.89
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "",
+      "name": "",
+      "sourceWorkflowNodeId": "start",
+      "targetWorkflowNodeId": "t15-D2",
+      "source_node_key": "start",
+      "target_node_key": "FileLoader"
+    },
+    {
+      "id": "",
+      "name": "",
+      "sourceWorkflowNodeId": "ysHozR",
+      "targetWorkflowNodeId": "end",
+      "source_node_key": "MilvusIndexer",
+      "target_node_key": "end"
+    },
+    {
+      "id": "",
+      "name": "",
+      "sourceWorkflowNodeId": "t15-D2",
+      "targetWorkflowNodeId": "xYmbpg",
+      "source_node_key": "FileLoader",
+      "target_node_key": "MarkdownSplitter"
+    },
+    {
+      "id": "",
+      "name": "",
+      "sourceWorkflowNodeId": "xYmbpg",
+      "targetWorkflowNodeId": "ysHozR",
+      "source_node_key": "MarkdownSplitter",
+      "target_node_key": "MilvusIndexer"
+    }
+  ],
+  "branches": [],
+  "nodeCounter": {
+    "Loader": 2,
+    "DocumentTransformer": 2,
+    "Indexer": 2,
+    "default": 3
+  }
+}

@@ -1,0 +1,25 @@
+FROM alpine:3.19
+
+# 安装 CA 证书和时区数据
+RUN apk add --no-cache ca-certificates tzdata
+ENV TZ=Asia/Shanghai
+
+WORKDIR /app
+
+# 创建日志目录
+RUN mkdir -p logs
+
+# 直接复制已编译的二进制文件
+COPY super-agent .
+
+# 复制配置文件
+COPY manifest/config/config.yaml ./manifest/config/config.yaml
+
+# 声明日志目录为卷，方便宿主机挂载持久化
+VOLUME ["/app/logs"]
+
+# 暴露端口
+EXPOSE 6872
+
+# 启动服务
+CMD ["./super-agent"]

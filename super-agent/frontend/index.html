@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>智能 OnCall 助手</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="layout">
+
+    <!-- ===== 侧边栏 ===== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <div class="brand">
+          <div class="brand-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <span class="brand-name">OnCall 助手</span>
+        </div>
+        <button class="icon-btn sidebar-toggle" onclick="toggleSidebar()" title="收起侧边栏">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M9 3v18"/>
+          </svg>
+        </button>
+      </div>
+
+      <button class="new-chat-btn" onclick="newChat()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        新建对话
+      </button>
+
+      <div class="nav-section">
+        <div class="nav-label">功能模式</div>
+        <button class="nav-item active" id="navQa" onclick="selectMode('qa')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          业务问答
+        </button>
+        <button class="nav-item" id="navAiops" onclick="selectMode('aiops')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07M8.46 8.46a5 5 0 0 0 0 7.07"/>
+          </svg>
+          AI Ops
+        </button>
+      </div>
+
+      <div class="history-section">
+        <div class="nav-label">近期对话</div>
+        <div class="history-list" id="historyList">
+          <div class="history-empty">暂无对话记录</div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ===== 主区域 ===== -->
+    <div class="main" id="main">
+
+      <!-- 顶部栏 -->
+      <header class="topbar">
+        <button class="icon-btn" id="sidebarOpenBtn" onclick="toggleSidebar()" title="展开侧边栏" style="display:none">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M9 3v18"/>
+          </svg>
+        </button>
+        <div class="topbar-title" id="topbarTitle">业务问答</div>
+        <div class="topbar-badge" id="topbarBadge">流式输出</div>
+      </header>
+
+      <!-- 消息区 -->
+      <div class="messages" id="messages">
+        <div class="welcome" id="welcome">
+          <div class="welcome-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h1 class="welcome-title">你好，我是智能 OnCall 助手</h1>
+          <p class="welcome-sub">选择左侧功能模式，开始提问</p>
+          <div class="welcome-cards">
+            <div class="welcome-card" onclick="fillInput('最近有哪些告警？')">
+              <div class="card-icon">🔔</div>
+              <div class="card-text">最近有哪些告警？</div>
+            </div>
+            <div class="welcome-card" onclick="fillInput('帮我分析一下服务异常原因')">
+              <div class="card-icon">🔍</div>
+              <div class="card-text">帮我分析服务异常原因</div>
+            </div>
+            <div class="welcome-card" onclick="fillInput('CPU 使用率过高如何排查？')">
+              <div class="card-icon">⚡</div>
+              <div class="card-text">CPU 使用率过高如何排查？</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 输入区 -->
+      <div class="input-wrap">
+        <!-- 文件预览 -->
+        <div class="file-chip-wrap" id="fileChipWrap" style="display:none">
+          <div class="file-chip" id="fileChip">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+            </svg>
+            <span id="fileChipName"></span>
+            <span class="file-chip-status" id="fileChipStatus"></span>
+            <button class="chip-remove" onclick="removeFile()" title="移除文件">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="input-box" id="inputBox">
+          <textarea
+            id="inputEl"
+            placeholder="输入消息，Shift+Enter 换行，Enter 发送"
+            rows="1"
+            oninput="autoResize(this)"
+          ></textarea>
+
+          <div class="input-actions">
+            <div class="actions-left">
+              <!-- 文件上传 -->
+              <button class="action-btn" onclick="triggerUpload()" title="上传文件">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+                </svg>
+              </button>
+              <input type="file" id="fileInput" style="display:none" onchange="handleFileSelect(this)" />
+            </div>
+
+            <div class="actions-right">
+              <!-- 模式切换 -->
+              <div class="mode-pill" id="modePill">
+                <button class="mode-pill-btn" id="modePillBtn" onclick="toggleModeMenu()">
+                  <span id="modePillLabel">业务问答</span>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="18 15 12 9 6 15"/>
+                  </svg>
+                </button>
+                <div class="mode-dropdown" id="modeDropdown" style="display:none">
+                  <div class="mode-dropdown-header">切换功能</div>
+                  <button class="mode-opt active" id="modeOptQa" onclick="selectMode('qa')">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                    <div>
+                      <div class="mode-opt-name">业务问答</div>
+                      <div class="mode-opt-desc">智能问答，流式输出</div>
+                    </div>
+                  </button>
+                  <button class="mode-opt" id="modeOptAiops" onclick="selectMode('aiops')">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="3"/>
+                      <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+                    </svg>
+                    <div>
+                      <div class="mode-opt-name">AI Ops</div>
+                      <div class="mode-opt-desc">AI 运维分析，流式推送</div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              <!-- 发送按钮 -->
+              <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13"/>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="input-hint">OnCall 助手可能出错，重要决策请人工复核</div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

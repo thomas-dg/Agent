@@ -14,54 +14,43 @@
 1. 依据用户提供的重构方案、源代码目录和重构代码目录开展工作。先分析方案与源代码，有不明确处与用户确认；接着将重构代码写入“重构代码目录”；最后检查代码，确保可编译通过且实现与方案一致。
 2. 通过将代码结构化为处理程序/控制器、服务/用例、存储库/数据访问和领域模型来应用**Clean Architecture**。
 3. 代码尽量简洁，避免过度设计
-4. 坚决反对将 Java、C# 等面向对象语言的设计模式和习惯带入 Go 代码中
-5. go代码需参考用户提供的最佳实践，以便代码符合惯用法、模块化、可测试、可维护
-6. 目录规范如下
+4. go代码需参考用户提供的最佳实践，以便代码符合惯用法、模块化、可测试、可维护
+5. 目录规范如下
 ```
 ├── doc           # 文档相关
 ├── tests         # 测试相关
 ├── src
-    ├── entity        # 微服务依赖的一些实体的对象，包括错误码、配置、实体结构。
-    │   ├── config
-    │   └── errors
-    ├── logic         # 业务主要逻辑的实现。不同的 logic 根据逻辑功能来分子目录，每个子目录中由 interface 抽象对 service 层暴露的功能
-    │   ├── product
-    │   │   ├── api.go
-    │   │   ├── api_impl.go
-    │   │   ├── api_impl_test.go
-    │   ├── order
-    │   │   ├── api.go
-    │   │   ├── api_impl.go
-    │   │   ├── api_impl_test.go
-    ├── repo          # 外部依赖均在 repo 中。包括外部 RPC 调用、配置的读取、存储的增删改查（如 MySQL、Redis）等
-    │   ├── pay
-    │       ├── api.go
-    │       ├── api_impl.go
-    │       ├── api_impl_test.go
-    │   ├── goods
-    │       ├── api.go
-    │       ├── api_impl.go
-    │       ├── api_impl_test.go
-    │       └── api_mock.go
-    │   ├── reportcfg
-    │   │   ├── rainbow.go
-    │   │   └── wuji.go
+	├── entity        # 微服务依赖的一些实体的对象，包括错误码、配置、实体结构。
+	│   ├── config
+	│   └── errors
+	├── logic         # 业务主要逻辑的实现。不同的 logic 根据逻辑功能来分子目录，每个子目录中由 interface 抽象对 service 层暴露的功能
+	│   ├── product
+	│   │   ├── api.go
+	│   │   ├── api_impl.go
+	│   │   ├── api_impl_test.go
+	│   ├── order
+	│   │   ├── api.go
+	│   │   ├── api_impl.go
+	│   │   ├── api_impl_test.go
+	├── repo          # 外部依赖均在 repo 中。包括外部 RPC 调用、配置的读取、存储的增删改查（如 MySQL、Redis）等
+	│   ├── pay
+	│       ├── api.go
+	│       ├── api_impl.go
+	│       ├── api_impl_test.go
+	│   ├── goods
+	│       ├── api.go
+	│       ├── api_impl.go
+	│       ├── api_impl_test.go
+	│       └── api_mock.go
+	│   ├── reportcfg
+	│   │   ├── rainbow.go
+	│   │   └── wuji.go
 ├──trpc_go.yaml
 ├── main.go          # 主程序入口
 ├── emall_service.go   # 这里是service层，仅是逻辑的抽象，无具体子目录
 ├── emall_service_test.go
 
 ```
-7. 当AI的建议与人工代码冲突时，人类代码拥有绝对优先权
-   - **强制行为**
-      - 当你的建议与项目中已存在的、由开发者编写或修改的代码冲突时，**必须无条件以人类代码为最终标准**。
-      - **严禁**在未获得用户明确同意的情况下，覆盖、重构或删除任何现有的人工实现。
-      - 在提供建议前，必须主动识别并告知你的建议与现有代码的关键差异。
-   - **禁止行为**
-     - 禁止假设你的实现比现有的更优。
-     - 禁止使用“更好”、“应该”等主观性词汇强推更改，应客观陈述差异（例如：“现有实现是A，我的建议是B。B在内存效率上可能更高，但A的逻辑更直接易懂。”）。
-     - 禁止忽略项目的特定技术栈、架构约定或编码风格。
-
 
 ## Skills
 ### 技能 1: 接收重构信息

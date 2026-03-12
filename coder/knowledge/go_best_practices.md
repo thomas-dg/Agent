@@ -333,60 +333,7 @@
   // 执行工具：go tool staticcheck ./...
   ```
 
-## 八、语言风格（避免将 Java、C# 等面向对象语言的设计模式和习惯带入 Go 代码中）
-### 1. 禁止使用 Java 风格的命名
-- **绝对禁止**创建名为 `XxxManager`, `XxxFactory`, `XxxUtil`, `XxxHelper` 的结构体或包。
-- **替代方案**：使用更具体、更简单的名词。例如，负责用户存储的功能，应命名为 `UserStore` 或直接使用函数 `SaveUser`，而非 `UserManager`。
-
-### 2. 推崇简单函数与小接口
-- **函数优先**：对于独立操作，优先使用**包级函数**，而非必须先创建结构体实例的方法。
-- **接口小而美**：接口应该只包含 1-3 个方法（例如 `io.Reader` 只有 `Read` 方法）。**坚决反对**包含几十个方法的“胖接口”。
-- **组合优于继承**：使用结构体嵌入（embedding）来复用功能，而不是构建复杂的继承层次。
-
-### 3. 地道的错误处理
-- **禁止异常风格**：绝不使用 `panic` 来处理正常的业务错误，除非是不可恢复的致命错误。
-- **显式错误处理**：函数操作可能失败时，必须返回 `(result, error)` 类型，并强制调用者检查 `error`。
-
-### 4. 项目结构与包设计
-- **扁平化结构**：包目录结构不宜过深。包名应短小、简洁、见名知义。
-- **包职责单一**：一个包只做一件事，并提供清晰的 API（即导出的函数和类型）。
-
-### 5. 并发模型
-- **使用 Go 原生并发**：优先使用 **goroutine** 和 **channel** 进行并发通信。
-- **明确同步机制**：使用 `sync.Mutex`, `sync.WaitGroup`, `errgroup.Group` 等标准库工具时，需确保逻辑清晰。
-
-### 正面与反面示例
-
-#### 命名示例
-- **反例** (`Java` 风格): `type UserManager struct {}`, `func (um *UserManager) ProcessUser()`
-- **正例** (`Go` 风格): `type UserStore struct {}`, `func SaveUser(user User) error`
-
-#### 接口示例
-- **反例** (`Java` 风格):
-  ```go
-  // 过于庞大的接口
-  type UserService interface {
-      CreateUser(...)
-      UpdateUser(...)
-      DeleteUser(...)
-      GetUser(...)
-      ListUsers(...)
-      // ... 更多方法
-  }
-  ```
-- **正例** (`Go` 风格):
-  ```go
-  // 拆分为小而专注的接口
-  type UserCreator interface {
-      CreateUser(...) error
-  }
-  type UserGetter interface {
-      GetUser(...) (*User, error)
-  }
-  ```
-
-
-## 九、禁用/慎用规则（生产避坑）
+## 八、禁用/慎用规则（生产避坑）
 1. 禁用`init`函数→用显式初始化函数（如`InitConfig()`）
 2. 慎用`unsafe`包→仅性能瓶颈且无替代方案时用，加安全注释
 3. 禁用硬编码敏感信息→用`os.Getenv("DB_PASSWORD")`

@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # 前端服务
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: ai-agent-frontend
+    ports:
+      - "3001:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - ai-agent-net
+
+  # 后端服务（Go 服务）
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    container_name: ai-agent-backend
+    ports:
+      - "6872:6872"
+    volumes:
+      - ./manifest/config:/app/manifest/config:ro
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - ai-agent-net
+
+networks:
+  ai-agent-net:
+    driver: bridge
