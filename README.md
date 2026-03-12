@@ -1,62 +1,171 @@
-# Agent
+# 🚀 Code Buddy Agent
 
-AI Agent 资源仓库，包含 System Prompt、评测体系和知识库。
-## 核心能力
-- **coder Agent**：
-  - refactoring：重构Agent，根据重构方案、mermaid流程图等上下文，完成go项目重构
-  - flowchart：mermaid流程图 Agent，根据上下文，生成mermaid流程图
-- **knowledge（知识库）**：
-  - go_best_practices.md：go 最佳实践
+<p align="center">
+  <strong>AI Agent 技术实践合集 —— 从 Prompt Engineering 到多 Agent 协作系统</strong>
+</p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/Go-1.23+-00ADD8?style=flat-square&logo=go" alt="Go">
+  <img src="https://img.shields.io/badge/AI_Framework-Eino-FF6B6B?style=flat-square" alt="Eino">
+  <img src="https://img.shields.io/badge/LLM-DeepSeek_V3-4A90D9?style=flat-square" alt="DeepSeek">
+  <img src="https://img.shields.io/badge/Pattern-Multi_Agent-00B4AB?style=flat-square" alt="Multi-Agent">
+  <img src="https://img.shields.io/badge/Protocol-MCP-FF9500?style=flat-square" alt="MCP">
+</p>
 
-## 为什么会有这个项目？
+---
 
-随着LLM能力不断提升，AI编程已经从copilot升级到vibe后，但实际使用发现，AI还是有很多不足，特别对需要长期维护、不断演进的项目（相对weekend project而言）。
-秉承着“人类为主，AI辅助”的原则，希望AI在人类指定的规则范围内进行工作，避免“失控”。
+## 🎯 项目概述
 
-
-## 目录结构
+本仓库是 **AI Agent** 技术方向的实践项目集，包含两个核心子项目，体现了从 Prompt Engineering（提示词工程）到完整 Agent 系统（多 Agent 协作 + 工具调用 + RAG）的技术演进路径：
 
 ```
-coder/
-├── refactoring/              # 重构Agent（go项目）
-│   ├── system_prompt.md      # 核心提示词
-│   ├── requirements.md       # Agent 依赖信息
-│   ├── CHANGELOG.md          # 版本变更记录
-│   └── evaluating/           # 评测信息
-├── flowchart/                # mermaid 流程图Agent
-│   ├── system_prompt.md      # 核心提示词
-│   └── requirements.md       # Agent 依赖信息
-knowledge/
-└── go_best_practices.md      # Go 最佳实践知识库
+Code Buddy Agent
+├── 🤖 super-agent    →   智能 OnCall 运维助手（完整的多 Agent 系统）
+└── ✏️  coder          →   AI 编码 Agent 提示词工程（Prompt Engineering 方法论）
 ```
 
-## 快速开始
-Agent本身包括Prompt、插件、知识库等，本仓库侧重Prompt，其他依赖项放在Agent 同目录的requirements.md文件中。
+---
 
-1. 选择需要使用的Agent。
+## 📦 子项目一览
 
-2. 根据 system_prompt.md 和 requirements.md 搭建Agent
+### 🤖 [Super Agent](./super-agent/) — 智能 OnCall 运维助手
 
-3. 使用新搭建的Agent进行工作。
+> **🌐 在线体验：[http://49.232.223.185:3001](http://49.232.223.185:3001)**
 
+一个面向运维场景的智能 AI 助手，采用多 Agent 协作架构，集成了当前 AI Agent 领域的核心技术：
 
+| 能力 | 技术方案 | 说明 |
+|:---:|:---:|:---|
+| 🧠 智能问答 | RAG + ReAct Agent | 知识检索增强 + 工具增强推理 |
+| 🔧 运维分析 | Plan-Execute Agent | LLM 驱动的自动化分析流水线 |
+| 📚 知识管理 | ETL Pipeline | 文档加载 → 分割 → 向量化 → 存储 |
+| 🔌 工具集成 | MCP Protocol | Prometheus / CLS 日志 / 文档检索 |
 
-## 版本历史
+**技术亮点**：
+- 基于 [Eino](https://github.com/cloudwego/eino)（字节跳动开源）的 **Graph 编排** 实现多 Agent 协作
+- **Plan-Execute** 模式：Planner(深度推理) → Executor(工具调用) → Replanner(动态调整)
+- **ReAct** 模式：RAG 检索 + 多步工具推理，流式输出
+- MCP 协议集成腾讯云 CLS 日志服务
+- SSE 全链路流式响应
+- Docker Compose 一键部署
 
-### refactoring Agent 版本历史
+📖 [查看完整技术文档 →](./super-agent/README.md)
 
-- **v0.0.3**：强化 Go 最佳实践，增加人类代码优先权
-- **v0.0.2**：增加目录规范，解决 Java 风格问题  
-- **v0.0.1**：基础重构能力
+---
 
-详见：[CHANGELOG.md](coder/refactoring/CHANGELOG.md)
+### ✏️ [Coder](./coder/) — AI 编码 Agent 提示词工程
 
-### mermaid 流程图Agent 版本历史
+一套系统化的 Prompt Engineering 方法论实践，定义了一个高质量的 Go 代码重构 Agent：
 
-- **v0.0.1**：基础流程图能力
+| 模块 | 内容 | 说明 |
+|:---:|:---:|:---|
+| 🔧 重构 Agent | System Prompt | Role + Goals + Rules + Workflow 完整定义 |
+| 📚 知识库 | Go Best Practices | Go 1.24+ 最佳实践（8 大章节） |
+| 📊 评测体系 | Case + User Prompt | 真实代码案例对比 + 标准化评测 |
+| 📋 变更日志 | CHANGELOG | 数据驱动的 Prompt 迭代记录 |
 
-详见：[CHANGELOG.md](coder/flowchart/CHANGELOG.md)
+**技术亮点**：
+- **评测驱动**的 Prompt 优化循环：设计 → 评测 → 分析 → 改进
+- 知识库 (RAG) 解决领域规范类问题，将最佳实践注入 Agent
+- Clean Architecture 架构约束，确保生成代码的工程质量
+- 版本化管理，清晰记录每次迭代的改进点
 
+📖 [查看完整文档 →](./coder/README.md)
 
+---
 
+## 🏗 技术架构总览
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                    Code Buddy Agent                          │
+├────────────────────────┬─────────────────────────────────────┤
+│                        │                                     │
+│   ✏️ Coder              │   🤖 Super Agent                    │
+│   (Prompt Engineering) │   (Multi-Agent System)              │
+│                        │                                     │
+│   ┌────────────────┐   │   ┌──────────────────────────────┐  │
+│   │ System Prompt  │   │   │     Chat Agent (ReAct)       │  │
+│   │ ┌────────────┐ │   │   │  RAG + Tool-Augmented        │  │
+│   │ │   Role     │ │   │   │  Reasoning                   │  │
+│   │ │   Goals    │ │   │   └──────────────────────────────┘  │
+│   │ │   Rules    │ │   │   ┌──────────────────────────────┐  │
+│   │ │   Skills   │ │   │   │   AIOps Agent (Plan-Execute) │  │
+│   │ │  Workflow  │ │   │   │  Planner → Executor →        │  │
+│   │ └────────────┘ │   │   │  Replanner (循环)             │  │
+│   └────────────────┘   │   └──────────────────────────────┘  │
+│   ┌────────────────┐   │   ┌──────────────────────────────┐  │
+│   │ Knowledge Base │   │   │   Knowledge Pipeline (ETL)   │  │
+│   │ Go Best        │   │   │  Load → Split → Embed →      │  │
+│   │ Practices      │   │   │  Index (Milvus)              │  │
+│   └────────────────┘   │   └──────────────────────────────┘  │
+│   ┌────────────────┐   │   ┌──────────────────────────────┐  │
+│   │ Evaluation     │   │   │   Tool Chain                 │  │
+│   │ Framework      │   │   │  Prometheus / CLS(MCP) /     │  │
+│   │ Case + Metrics │   │   │  DuckDuckGo / DocRetriever   │  │
+│   └────────────────┘   │   └──────────────────────────────┘  │
+│                        │                                     │
+├────────────────────────┴─────────────────────────────────────┤
+│                    Infrastructure                            │
+│  DeepSeek V3 │ Milvus │ 千问 Embedding │ Docker Compose      │
+└──────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 🛠 技术栈
+
+| 类别 | 技术 |
+|:---|:---|
+| **编程语言** | Go 1.23+ |
+| **AI Agent 框架** | [Cloudwego Eino](https://github.com/cloudwego/eino) (字节跳动开源) |
+| **大语言模型** | DeepSeek V3 (Think + Quick) |
+| **向量数据库** | Milvus |
+| **Embedding 模型** | 千问 text-embedding-v4 (DashScope) |
+| **Web 框架** | GoFrame v2 |
+| **工具协议** | MCP (Model Context Protocol) |
+| **前端** | 原生 HTML/CSS/JS (SSE 流式) |
+| **部署** | Docker Compose |
+
+---
+
+## 🧩 项目演进路线
+
+```
+Phase 1: Prompt Engineering           Phase 2: Agent System
+┌─────────────────────────┐           ┌─────────────────────────────┐
+│                         │           │                             │
+│  ✏️ Coder                │    ──▶    │  🤖 Super Agent              │
+│                         │           │                             │
+│  • System Prompt 设计   │           │  • 多 Agent 协作 (Graph 编排) │
+│  • 知识库 (RAG) 构建    │           │  • Plan-Execute 自动化       │
+│  • 评测驱动迭代         │           │  • ReAct + RAG 融合          │
+│  • Go 最佳实践整理      │           │  • MCP 工具链集成            │
+│                         │           │  • SSE 流式全栈              │
+│  💡 探索 LLM 编码能力    │           │  💡 构建完整 Agent 系统       │
+│                         │           │                             │
+└─────────────────────────┘           └─────────────────────────────┘
+```
+
+---
+
+## 📁 仓库结构
+
+```
+code-buddy-agent/
+├── README.md                 # 📌 本文件（仓库概要）
+├── super-agent/              # 🤖 智能 OnCall 运维助手
+│   ├── main.go               #    主入口
+│   ├── internal/ai/agent/    #    核心 Agent 实现
+│   ├── frontend/             #    前端页面
+│   └── ...                   #    详见 super-agent/README.md
+└── coder/                    # ✏️ AI 编码 Agent 提示词工程
+    ├── Refactoring/          #    重构 Agent 定义 + 评测
+    └── knowledge/            #    Go 最佳实践知识库
+```
+
+---
+
+## 📄 License
+
+本项目仅供学习和技术交流使用。
